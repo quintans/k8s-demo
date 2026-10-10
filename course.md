@@ -824,17 +824,17 @@ You've now implemented an automated path from a code commit to a running applica
 Troubleshooting is one of the most valuable skills you can develop. Learn these commands early.
 
 
-| Problem                 | Command                                                          |
-| :---------------------- | :--------------------------------------------------------------- |
-| Pod isn't starting      | kubectl get pods -n demo                                         |
-| Pod details and events  | kubectl describe pod -n demo POD_NAME                            |
-| Application logs        | kubectl logs -n demo deployment/k8s-demo                         |
-| Previous container logs | kubectl logs -n demo POD_NAME --previous                         |
-| Deployment rollout      | kubectl rollout status deployment/k8s-demo -n demo               |
-| Rollout history         | kubectl rollout history deployment/k8s-demo -n demo              |
-| Service endpoints       | kubectl get endpointslices -n demo                               |
-| Cluster events          | kubectl get events -n demo --sort-by=.metadata.creationTimestamp |
-| Argo CD application     | kubectl describe application k8s-demo -n argocd                  |
+| Problem                 | Command                                                            |
+| :---------------------- | :----------------------------------------------------------------- |
+| Pod isn't starting      | `kubectl get pods -n demo`                                         |
+| Pod details and events  | `kubectl describe pod -n demo POD_NAME`                            |
+| Application logs        | `kubectl logs -n demo deployment/k8s-demo`                         |
+| Previous container logs | `kubectl logs -n demo POD_NAME --previous`                         |
+| Deployment rollout      | `kubectl rollout status deployment/k8s-demo -n demo`               |
+| Rollout history         | `kubectl rollout history deployment/k8s-demo -n demo`              |
+| Service endpoints       | `kubectl get endpointslices -n demo`                               |
+| Cluster events          | `kubectl get events -n demo --sort-by=.metadata.creationTimestamp` |
+| Argo CD application     | `kubectl describe application k8s-demo -n argocd`                  |
 
 
 Three common failures to reproduce deliberately:
