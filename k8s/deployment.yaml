@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/quintans/k8s-demo:30734bce4824c8b371ca646b2993cab055a11345
+          image: ghcr.io/quintans/k8s-demo:f71c4d05a4ab08d1ca093c63423eb5c843bb8e6d
           ports:
             - name: http
               containerPort: 8080
