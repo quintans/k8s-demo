@@ -67,7 +67,7 @@ jobs:
           VERSION: ${{ github.sha }}
         run: |
           sed -i -E \
-            "s|image: ghcr.io/OWNER/k8s-demo:.*|image: ${IMAGE}:${VERSION}|" \
+            "s|image: ghcr.io/quintans/k8s-demo:.*|image: ${IMAGE}:${VERSION}|" \
             k8s/deployment.yaml
 
           sed -i -E \
