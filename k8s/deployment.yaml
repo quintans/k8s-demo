@@ -20,17 +20,13 @@ spec:
     spec:
       containers:
         - name: app
-          # image: ghcr.io/quintans/k8s-demo:bootstrap
-          image: k8s-demo:v1
-          # delete me
-          imagePullPolicy: IfNotPresent
+          image: ghcr.io/quintans/k8s-demo:bootstrap
           ports:
             - name: http
               containerPort: 8080
           env:
             - name: APP_VERSION
-              # value: "571fc74eda8a1456ea50f0768c1efa3eee2037bc"
-              value: "v1"
+              value: "bootstrap"
           resources:
             requests:
               cpu: 100m

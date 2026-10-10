@@ -586,7 +586,7 @@ git commit -m "ci: add automated build and publish"
 git push
 ```
 
-Open the repository's Actions tab in GitHub.
+Open the repository's `Actions` tab in GitHub.
 
 Verify that:
 1. The tests pass.
