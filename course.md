@@ -459,8 +459,8 @@ Your first push is just source control. We'll now configure GitHub Actions to te
 ## 9. Configure continuous integration and delivery
 
 There are two related but distinct processes:
-- CI (continuous integration): test the code and build a deployable artifact.
-- CD (continuous delivery/deployment): update the desired application version and make it run in Kubernetes.
+- **CI (continuous integration)**: test the code and build a deployable artifact.
+- **CD (continuous delivery/deployment)**: update the desired application version and make it run in Kubernetes.
 
 For this exercise, we'll implement CI using GitHub Actions and CD using Argo CD.
 
@@ -566,6 +566,7 @@ This workflow uses a few useful patterns:
 - The `GITHUB_TOKEN` is used instead of a long-lived personal access token.
 
 The workflow's `OWNER` placeholder in the sed command must match the one in your manifest. If you use a different image path, adjust it accordingly.
+
 The official [GitHub Actions container publishing](https://docs.github.com/en/actions/tutorials/publish-packages/publish-docker-images) guide covers image publishing and registry permissions. 
 
 ### 9.2 Make the container package public
