@@ -20,13 +20,13 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/quintans/k8s-demo:bootstrap
+          image: ghcr.io/quintans/k8s-demo:30734bce4824c8b371ca646b2993cab055a11345
           ports:
             - name: http
               containerPort: 8080
           env:
             - name: APP_VERSION
-              value: "bootstrap"
+              value: "30734bce4824c8b371ca646b2993cab055a11345"
           resources:
             requests:
               cpu: 100m
