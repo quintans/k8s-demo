@@ -567,6 +567,8 @@ This workflow uses a few useful patterns:
 
 The workflow's `OWNER` placeholder in the sed command must match the one in your manifest. If you use a different image path, adjust it accordingly.
 
+The branch can be `main` or `master`. Adjust it accordingly.
+
 The official [GitHub Actions container publishing](https://docs.github.com/en/actions/tutorials/publish-packages/publish-docker-images) guide covers image publishing and registry permissions. 
 
 ### 9.2 Make the container package public
@@ -674,7 +676,7 @@ Use this only for the local lab. Do not expose the Argo CD server publicly or le
 ## 11. Connect Argo CD to your Git repository
 We'll declare an Argo CD Application. This object tells Argo CD which repository and directory to watch, which cluster to deploy to, and whether to synchronize automatically.
 
-Create `k8s/argocd-application.yaml` locally, but do not put it inside the directory Argo CD will manage. Instead, keep it at the project root, or use the following command to create it there:
+Create `argocd-application.yaml` locally, but do not put it inside the directory Argo CD will manage. Instead, keep it at the project root, or use the following command to create it there:
 ```bash
 cat > argocd-application.yaml <<'EOF'
 apiVersion: argoproj.io/v1alpha1
@@ -701,6 +703,8 @@ EOF
 ```
 
 Replace `OWNER` with your GitHub username or organization.
+
+Set `targetRevision` to `main` or `master`.
 
 The repository must be readable by Argo CD. Public repositories work without additional credentials; for private repositories, configure repository credentials securely.
 
