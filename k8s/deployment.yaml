@@ -20,13 +20,13 @@ spec:
     spec:
       containers:
         - name: app
-          image: ghcr.io/quintans/k8s-demo:51832c39b2fe45b370ced1fe3213aae550f1f333
+          image: ghcr.io/quintans/k8s-demo:9c01d9113ecf090a4ed4fd1953aeefc4bb4b76a3
           ports:
             - name: http
               containerPort: 8080
           env:
             - name: APP_VERSION
-              value: "51832c39b2fe45b370ced1fe3213aae550f1f333"
+              value: "9c01d9113ecf090a4ed4fd1953aeefc4bb4b76a3"
             - name: APP_MESSAGE
               valueFrom:
                 configMapKeyRef:
