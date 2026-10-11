@@ -25,7 +25,7 @@ spec:
               containerPort: 8080
           env:
             - name: APP_VERSION
-              value: "xxx"
+              value: "a51578598d8e55b55bdb1372e3142b07d4ca0258"
             - name: APP_MESSAGE
               valueFrom:
                 configMapKeyRef:
