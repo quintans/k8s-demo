@@ -168,6 +168,7 @@ on:
     branches: [main]
     # commits that only touch the deployment manifests do not start the workflow
     paths-ignore:
+      - "course/**"
       - "k8s/**"
       - "**.md"
   pull_request:
