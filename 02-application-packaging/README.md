@@ -72,21 +72,6 @@ images:
   - name: ghcr.io/OWNER/k8s-demo
     newName: ghcr.io/OWNER/k8s-demo
     newTag: bootstrap
-
-patches:
-  - patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: k8s-demo
-      spec:
-        template:
-          spec:
-            containers:
-              - name: app
-                env:
-                  - name: APP_VERSION
-                    value: "bootstrap"
 ```
 
 Replace `OWNER` with your lowercase GitHub username or organization.

@@ -14,18 +14,3 @@ images:
   - name: ghcr.io/quintans/k8s-demo
     newName: ghcr.io/quintans/k8s-demo
     newTag: bd664d7dc39b02f767aa7dfaffe4fc3209c4cb51
-
-patches:
-  - patch: |-
-      apiVersion: apps/v1
-      kind: Deployment
-      metadata:
-        name: k8s-demo
-      spec:
-        template:
-          spec:
-            containers:
-              - name: app
-                env:
-                  - name: APP_VERSION
-                    value: "bd664d7dc39b02f767aa7dfaffe4fc3209c4cb51"

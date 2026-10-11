@@ -85,8 +85,11 @@ jobs:
         run: |
           sed -i -E \
             -e "s|newTag: .*|newTag: ${IMAGE_TAG}|" \
-            -e "/name: APP_VERSION/{n;s|value: .*|value: \"${IMAGE_TAG}\"|;}" \
             k8s/overlays/dev/kustomization.yaml
+
+          sed -i -E \
+            "s|value: \".*\"|value: \"${VERSION}\"|" \
+            k8s/base/deployment.yaml
 
       - name: Create deployment pull request
         uses: peter-evans/create-pull-request@v7
