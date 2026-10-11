@@ -239,8 +239,11 @@ jobs:
         run: |
           sed -i -E \
             -e "s|newTag: .*|newTag: ${IMAGE_TAG}|" \
-            -e "/name: APP_VERSION/{n;s|value: .*|value: \"${IMAGE_TAG}\"|;}" \
             k8s/overlays/dev/kustomization.yaml
+
+          sed -i -E \
+            "s|value: \".*\"|value: \"${IMAGE_TAG}\"|" \
+            k8s/base/deployment.yaml
 
       - name: Create deployment pull request
         uses: peter-evans/create-pull-request@v7
@@ -258,7 +261,9 @@ jobs:
 
             Merge this pull request to deploy the new version
             through Argo CD.
-          add-paths: k8s/overlays/dev/kustomization.yaml
+          add-paths: |
+            k8s/overlays/dev/kustomization.yaml
+            k8s/base/deployment.yaml
 ```
 
 Where `main` is used, it can be `master`, depending on how your trunk branch was setup.

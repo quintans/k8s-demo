@@ -88,7 +88,7 @@ jobs:
             k8s/overlays/dev/kustomization.yaml
 
           sed -i -E \
-            "s|value: \".*\"|value: \"${VERSION}\"|" \
+            "s|value: \".*\"|value: \"${IMAGE_TAG}\"|" \
             k8s/base/deployment.yaml
 
       - name: Create deployment pull request
@@ -107,4 +107,6 @@ jobs:
 
             Merge this pull request to deploy the new version
             through Argo CD.
-          add-paths: k8s/overlays/dev/kustomization.yaml
+          add-paths: |
+            k8s/overlays/dev/kustomization.yaml
+            k8s/base/deployment.yaml
