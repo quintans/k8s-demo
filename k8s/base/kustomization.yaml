@@ -8,5 +8,5 @@ resources:
 configMapGenerator:
   - name: k8s-demo-config
     literals:
-      - APP_MESSAGE=Hello from Kubernetes
+      - APP_MESSAGE=Hello from Kubernetes (kustomization)
       - LOG_LEVEL=info

@@ -157,6 +157,8 @@ Replace `OWNER` with your lowercase GitHub username or organization.
 
 Where `main` is used, it can be `master`, depending on how your trunk branch was setup.
 
+Turn on "Allow GitHub Actions to create and approve pull requests" In the `k8s-demo` repo. Go to Settings, then Actions, then General, scroll to "Workflow permissions", tick "Allow GitHub Actions to create and approve pull requests", and save.
+
 Replace the content of `.github/workflows/ci-cd.yaml` with:
 ```yaml
 name: CI and publish
