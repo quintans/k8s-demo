@@ -181,6 +181,10 @@ name: CI and publish
 on:
   push:
     branches: [main]
+    # commits that only touch the deployment manifests do not start the workflow
+    paths-ignore:
+      - "k8s/**"
+      - "**.md"
   pull_request:
     branches: [main]
 
