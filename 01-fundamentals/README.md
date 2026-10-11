@@ -23,14 +23,6 @@ kubectl apply -f argocd-application.yaml
 
 To open the Argo CD interface see [### 10.1 Open the Argo CD interface](../00-basics/README.md#101-open-the-argo-cd-interface).
 
-To retrieve the argo CD `admin` password:
-```bash
-kubectl -n argocd get secret argocd-initial-admin-secret \
-  -o jsonpath="{.data.password}" | base64 -d
-
-echo
-```
-
 ### Step 1.1 — Move configuration into a ConfigMap
 A ConfigMap stores non-sensitive configuration separately from the container image. This lets you run the same image with different settings in different environments. 
 
@@ -42,7 +34,7 @@ metadata:
   name: k8s-demo-config
   namespace: demo
 data:
-  APP_MESSAGE: "Hello from Kubernetes"
+  APP_MESSAGE: "Hello from Kubernetes (ConfigMap)"
   LOG_LEVEL: "info"
 ```
 
@@ -90,12 +82,25 @@ kubectl get configmap -n demo
 kubectl rollout status deployment/k8s-demo -n demo
 ```
 
-Query the application:
+Forward the Service port:
+```bash
+kubectl port-forward -n demo service/k8s-demo 8080:80
+```
+
+In another terminal query the application:
 ```bash
 curl -s http://localhost:8080/
 ```
 
-You should see the message from the ConfigMap.
+You should see JSON similar to:
+```json
+{
+  "application": "k8s-demo",
+  "version": "<commit-sha>",
+  "message": "Hello from Kubernetes (ConfigMap)"
+}
+```
+
 **Experiment**: change `APP_MESSAGE` in `k8s/configmap.yaml` and push another commit.
 
 An important detail: ConfigMap values consumed as environment variables are read when the container starts. Updating a ConfigMap does not automatically update existing environment variables inside running containers. Restart the Deployment when you need to reload them:

@@ -4,5 +4,5 @@ metadata:
   name: k8s-demo-config
   namespace: demo
 data:
-  APP_MESSAGE: "Hello from Kubernetes"
+  APP_MESSAGE: "Hello from Kubernetes (ConfigMap)"
   LOG_LEVEL: "info"
