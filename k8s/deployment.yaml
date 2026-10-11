@@ -27,6 +27,16 @@ spec:
           env:
             - name: APP_VERSION
               value: "6325f7ea11003d45afef94b355495f90fddbe9bf"
+            - name: APP_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: k8s-demo-config
+                  key: APP_MESSAGE
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: k8s-demo-config
+                  key: LOG_LEVEL
           resources:
             requests:
               cpu: 100m

@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: k8s-demo-config
+  namespace: demo
+data:
+  APP_MESSAGE: "Hello from Kubernetes"
+  LOG_LEVEL: "info"

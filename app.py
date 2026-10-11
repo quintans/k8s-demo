@@ -5,6 +5,7 @@ from flask import Flask, jsonify
 app = Flask(__name__)
 
 VERSION = os.getenv("APP_VERSION", "local")
+MESSAGE = os.getenv("APP_MESSAGE", "Hello from Kubernetes!")
 
 
 @app.get("/")
@@ -12,7 +13,7 @@ def index():
     return jsonify(
         application="k8s-demo",
         version=VERSION,
-        message="Hello from Kubernetes!"
+        message=MESSAGE
     )
 
 
