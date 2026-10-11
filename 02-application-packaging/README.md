@@ -153,6 +153,110 @@ Your existing Argo CD application currently watches the k8s directory. Change th
     path: k8s/overlays/dev
 ```
 
+Replace `OWNER` with your lowercase GitHub username or organization.
+
+Where `main` is used, it can be `master`, depending on how your trunk branch was setup.
+
+Replace the content of `.github/workflows/ci-cd.yaml` with:
+```yaml
+name: CI and publish
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: pip install -r requirements-dev.txt
+
+      - name: Run tests
+        run: pytest -q
+
+  build-and-publish:
+    name: Build, publish and propose deployment
+    runs-on: ubuntu-latest
+    needs: test
+
+    # Publish images and create deployment PRs only for pushes to main.
+    if: >-
+      github.event_name == 'push' &&
+      github.ref == 'refs/heads/main'
+
+    permissions:
+      contents: write
+      packages: write
+      pull-requests: write
+
+    env:
+      IMAGE_NAME: ghcr.io/${{ github.repository }}
+      IMAGE_TAG: ${{ github.sha }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+
+      - name: Update development image tag
+        run: |
+          sed -i -E \
+            "s|newTag: .*|newTag: ${env.IMAGE_TAG}|" \
+            k8s/overlays/dev/kustomization.yaml
+
+      - name: Create deployment pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: automation/deploy-dev-${{ github.sha }}
+          delete-branch: true
+          commit-message: "deploy(dev): promote ${{ github.sha }}"
+          title: "deploy(dev): promote ${{ github.sha }}"
+          body: |
+            Updates the development image to the newly published version.
+
+            Image: ${{ env.IMAGE_NAME }}
+            Tag: ${{ github.sha }}
+
+            Merge this pull request to deploy the new version
+            through Argo CD.
+          add-paths: k8s/overlays/dev/kustomization.yaml
+```
+
+Where `main` is used, it can be `master`, depending on how your trunk branch was setup.
+
 Commit the refactor and push it. Then update the Argo CD application definition:
 ```bash
 kubectl apply -f argocd-application.yaml

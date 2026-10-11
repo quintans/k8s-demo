@@ -511,6 +511,9 @@ jobs:
           echo "name=ghcr.io/${GITHUB_REPOSITORY,,}" \
             >> "$GITHUB_OUTPUT"
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
