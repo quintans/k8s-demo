@@ -13,7 +13,7 @@ replicas:
 images:
   - name: ghcr.io/quintans/k8s-demo
     newName: ghcr.io/quintans/k8s-demo
-    newTag: 4ee54528150688c699aa45b18aa842f62786897b
+    newTag: b1e64dc95575356c748eef9f362fceff82647793
 
 patches:
   - patch: |-
@@ -28,4 +28,4 @@ patches:
               - name: app
                 env:
                   - name: APP_VERSION
-                    value: "4ee54528150688c699aa45b18aa842f62786897b"
+                    value: "b1e64dc95575356c748eef9f362fceff82647793"
