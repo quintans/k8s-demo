@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: k8s-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8s-demo
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: k8s-demo
+    spec:
+      containers:
+        - name: app
+          image: ghcr.io/quintans/k8s-demo:9c01d9113ecf090a4ed4fd1953aeefc4bb4b76a3
+          ports:
+            - name: http
+              containerPort: 8080
+          env:
+            - name: APP_VERSION
+              value: "9c01d9113ecf090a4ed4fd1953aeefc4bb4b76a3"
+            - name: APP_MESSAGE
+              valueFrom:
+                configMapKeyRef:
+                  name: k8s-demo-config
+                  key: APP_MESSAGE
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: k8s-demo-config
+                  key: LOG_LEVEL
+            - name: DEMO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: demo-credentials
+                  key: DEMO_PASSWORD
+          resources:
+            requests:
+              cpu: 100m
+              memory: 64Mi
+            limits:
+              cpu: 500m
+              memory: 128Mi
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            failureThreshold: 30
+            periodSeconds: 2
+          readinessProbe:
+            httpGet:
+              path: /readyz
+              port: http
+            periodSeconds: 5
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: http
+            periodSeconds: 10
+      terminationGracePeriodSeconds: 30

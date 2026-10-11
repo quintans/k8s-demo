@@ -186,8 +186,7 @@ For this lab, the Secret is created imperatively and is not managed by Argo CD. 
 ### Step 1.3 — Scale the application
 Run:
 ```bash
-kubectl scale deployment/k8s-demo \
-  --replicas=3 -n demo
+kubectl scale deployment/k8s-demo --replicas=3 -n demo
 ```
 
 Inspect the result:
@@ -195,7 +194,7 @@ Inspect the result:
 kubectl get deployment,pods -n demo
 ```
 
-You should see three pods.
+You should see three pods. Eventually the Deployment controller should drop the new pod.
 
 Now delete one:
 ```bash

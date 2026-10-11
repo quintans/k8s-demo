@@ -4,4 +4,7 @@ The best way to learn Kubernetes is to build a small but realistic environment o
 ## Learning Sections
 
 ### [00 - Basics](00-basics/README.md)
+
 ### [01 - Fundamentals](01-fundamentals/README.md)
+
+### [02 - Application Packaging](02-application-packaging/README.md)

@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/quintans/k8s-demo.git
     targetRevision: master
-    path: k8s
+    path: k8s/overlays/dev
   destination:
     server: https://kubernetes.default.svc
     namespace: demo
