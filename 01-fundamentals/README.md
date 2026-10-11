@@ -69,11 +69,6 @@ def index():
     )
 ```
 
-Apply the ConfigMap:
-```bash
-kubectl apply -f k8s/configmap.yaml
-```
-
 Commit both files to Git and push them. Since Argo CD manages your application, let it synchronize the changes.
 
 Check the result:
@@ -136,6 +131,49 @@ kubectl describe secret demo-credentials -n demo
 ```
 
 The output shows the key and the size of its value, rather than displaying the password.
+
+Update `app.py` so the message is configurable:
+```python
+PASSWORD = os.getenv("DEMO_PASSWORD", "undefined")
+
+
+@app.get("/")
+def index():
+    return jsonify(
+        application="k8s-demo",
+        version=VERSION,
+        message=MESSAGE,
+        password=PASSWORD
+    )
+```
+
+Commit both files to Git and push them. Since Argo CD manages your application, let it synchronize the changes.
+
+Check the result:
+```bash
+kubectl get configmap -n demo
+kubectl rollout status deployment/k8s-demo -n demo
+```
+
+Forward the Service port:
+```bash
+kubectl port-forward -n demo service/k8s-demo 8080:80
+```
+
+In another terminal query the application:
+```bash
+curl -s http://localhost:8080/
+```
+
+You should see JSON similar to:
+```json
+{
+  "application": "k8s-demo",
+  "version": "<commit-sha>",
+  "message": "Hello from Kubernetes (ConfigMap)",
+  "password": "not-a-real-password"
+}
+```
 
 A few rules:
 - Don't commit real credentials or unencrypted secret values to Git.

@@ -37,6 +37,11 @@ spec:
                 configMapKeyRef:
                   name: k8s-demo-config
                   key: LOG_LEVEL
+            - name: DEMO_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: demo-credentials
+                  key: DEMO_PASSWORD
           resources:
             requests:
               cpu: 100m
