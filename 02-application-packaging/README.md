@@ -207,8 +207,7 @@ jobs:
       - name: Run tests
         run: pytest -q
 
-  build-and-publish:
-    name: Build, publish and propose deployment
+  publish:
     runs-on: ubuntu-latest
     needs: test
 
@@ -278,6 +277,10 @@ jobs:
 ```
 
 Where `main` is used, it can be `master`, depending on how your trunk branch was setup.
+
+The publishing job needs appropriate permissions, including contents: write and pull-requests: write, to create the branch and pull request. Keep permissions job-scoped and as narrow as possible.
+
+For a production repository, pin the third-party action to a verified full commit SHA rather than relying on a version tag.
 
 Commit the refactor and push it. Then update the Argo CD application definition:
 ```bash
