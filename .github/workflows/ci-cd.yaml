@@ -72,7 +72,8 @@ jobs:
       - name: Update development image tag
         run: |
           sed -i -E \
-            "s|newTag: .*|newTag: ${IMAGE_TAG}|" \
+            -e "s|newTag: .*|newTag: ${IMAGE_TAG}|" \
+            -e "/name: APP_VERSION/{n;s|value: .*|value: \"${IMAGE_TAG}\"|;}" \
             k8s/overlays/dev/kustomization.yaml
 
       - name: Create deployment pull request
