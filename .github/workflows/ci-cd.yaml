@@ -46,7 +46,7 @@ jobs:
 
     env:
       IMAGE_NAME: ghcr.io/${{ github.repository }}
-      IMAGE_TAG: ${{ github.sha }}
+      IMAGE_TAG: ${{ github.run_number }}
 
     steps:
       - name: Checkout repository
@@ -76,7 +76,7 @@ jobs:
       - name: Scan image
         uses: aquasecurity/trivy-action@v0.36.0
         with:
-          image-ref: ghcr.io/${{ github.repository }}:${{ github.sha }}
+          image-ref: ${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
           format: table
           severity: HIGH,CRITICAL
           ignore-unfixed: true
@@ -96,15 +96,16 @@ jobs:
         uses: peter-evans/create-pull-request@v7
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: automation/deploy-dev-${{ github.sha }}
+          branch: automation/deploy-dev-${{ env.IMAGE_TAG }}
           delete-branch: true
-          commit-message: "deploy(dev): promote ${{ github.sha }}"
-          title: "deploy(dev): promote ${{ github.sha }}"
+          commit-message: "deploy(dev): promote ${{ env.IMAGE_TAG }} (${{ github.sha }})"
+          title: "deploy(dev): promote ${{ env.IMAGE_TAG }} (${{ github.sha }})"
           body: |
             Updates the development image to the newly published version.
 
             Image: ${{ env.IMAGE_NAME }}
-            Tag: ${{ github.sha }}
+            Tag: ${{ env.IMAGE_TAG }}
+            Commit: ${{ github.sha }}
 
             Merge this pull request to deploy the new version
             through Argo CD.
