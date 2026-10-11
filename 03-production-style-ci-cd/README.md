@@ -55,7 +55,7 @@ The process should now be:
 1. Push application code to a feature branch.
 2. Open a pull request.
 3. Verify tests pass.
-4. Merge the application change into `main`.
+4. Merge the application change into `main` or `master`.
 5. Verify that the image is built, scanned and published.
 6. Review and merge the generated deployment pull request.
 7. Watch Argo CD synchronize the updated development overlay.

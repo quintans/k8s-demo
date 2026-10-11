@@ -10,7 +10,11 @@ RUN addgroup --system app \
     && adduser --system --ingroup app app
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install the app dependencies, then remove pip itself: it is not needed at
+# runtime and its vendored libraries (urllib3, msgpack, setuptools, ...) show
+# up as vulnerabilities in image scans.
+RUN pip install --no-cache-dir -r requirements.txt \
+    && pip uninstall -y pip
 
 COPY app.py .
 
