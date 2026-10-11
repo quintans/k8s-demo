@@ -13,4 +13,4 @@ replicas:
 images:
   - name: ghcr.io/quintans/k8s-demo
     newName: ghcr.io/quintans/k8s-demo
-    newTag: 4ee54528150688c699aa45b18aa842f62786897b
+    newTag: 065eb2bcc7f25bbcfbb6cf83278a35567109de51
